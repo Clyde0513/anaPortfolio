@@ -182,13 +182,14 @@ export default {
 }
 
 .back-button {
-  color: rgba(255, 192, 203, 0.7);
-  text-decoration: none;
-  font-size: 0.9em;
-  margin-bottom: 20px;
-  display: inline-block;
-  transition: color 0.3s ease;
+    color: pink;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 20px;
+    display: inline-block;
+    animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
+
 
 .back-button:hover {
   color: pink;

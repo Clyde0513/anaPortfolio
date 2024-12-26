@@ -65,12 +65,9 @@ export default {
   },
   methods: {
     toggleActivity(index) {
-      // If clicking the same activity, close it
-      // Otherwise, switch to the new activity
       if (this.currentOpenActivity === index) {
         this.currentOpenActivity = -1;
       } else {
-        // Close any open activity and open the clicked one
         this.currentOpenActivity = index;
       }
     },
@@ -93,6 +90,15 @@ export default {
 </script>
 
 <style scoped>
+
+.back-button {
+    color: pink;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 20px;
+    display: inline-block;
+    animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
 
 .toggle-icon{
     color: pink;
