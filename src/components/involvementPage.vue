@@ -44,7 +44,7 @@ export default {
       activities: [
         {
           name: 'Sguo Events Director',
-          description: 'Active member for ucla\'s society and genetics undergraduate organization"',
+          description: 'Active member for ucla\'s society and genetics undergraduate organization',
           details: [
             'Planned events for 100+ attendees',
             'Arranged logistics and catering',
