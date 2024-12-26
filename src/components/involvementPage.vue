@@ -43,21 +43,21 @@ export default {
       currentOpenActivity: -1,
       activities: [
         {
-          name: 'Game Development Club',
-          description: 'Active member and contributor to university game dev projects',
+          name: 'Sguo Events Director',
+          description: 'Active member for ucla\'s society and genetics undergraduate organization"',
           details: [
-            'Participated in weekly game jams',
-            'Mentored new members in Unity development',
-            'Collaborated on 3 team projects'
+            'Planned events for 100+ attendees',
+            'Arranged logistics and catering',
+            'Coordinated with guest speakers and vendors',
           ]
         },
         {
-          name: 'Open Source Contributions',
-          description: 'Regular contributor to gaming-related open source projects',
+          name: 'LWU Director of Projects and Events',
+          description: 'Brainstormed, lead, and organized projects and events for the organization',
           details: [
-            'Submitted bug fixes to popular modding tools',
-            'Created documentation for newcomers',
-            'Maintained several community resource repositories'
+            'Lead summer camps for 50+ students',
+            'Outreached to local universities and companies for partnerships',
+            'And more!',
           ]
         }
       ]
