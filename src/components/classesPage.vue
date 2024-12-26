@@ -59,6 +59,8 @@ export default {
   text-shadow: 0 0 10px pink,
                0 0 20px pink,
                0 0 30px pink;
+  display: inline-block;
+  animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
 
 .heart1 {
@@ -144,6 +146,20 @@ export default {
   to {
     box-shadow: 0 0 20px rgba(255,192,203,0.5),
                 inset 0 0 20px rgba(255,192,203,0.5);
+  }
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 </style>

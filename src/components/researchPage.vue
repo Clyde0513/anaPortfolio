@@ -89,12 +89,15 @@ export default {
   text-shadow: 0 0 10px pink,
                0 0 20px pink,
                0 0 30px pink;
+  animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  display: inline-block;
 }
 
 .heart {
   color: pink;
   font-size: 2em;
   margin-left: 10px;
+  animation: heartBeat 1.2s ease-in-out infinite;
 }
 
 .research-box {
@@ -137,7 +140,6 @@ export default {
     display: inline-block;
     animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
 }
-
 
 .back-button:hover {
   color: pink;
@@ -204,5 +206,19 @@ export default {
   flex: 1;
   max-width: 400px;
   margin-top: 0;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>
