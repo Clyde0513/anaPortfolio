@@ -22,7 +22,7 @@
       >
         <div class="content" v-show="isOpenCITI" :class="{ 'content-open': isOpenCITI }">
           <ul class="classes-list">
-            CITI Program (issued Mar 2023 • Expires Mar 2026)
+            <span class="program-date">CITI Program (issued Mar 2023 • Expires Mar 2026)</span>
           </ul>
           <p>
             • Credential ID 52715192
@@ -47,7 +47,7 @@
       >
         <div class="content" v-show="isOpenBLS" :class="{ 'content-open': isOpenBLS }">
           <ul class="classes-list">
-            BLS Program (issued July 2024)
+            <span class="program-date">BLS Program (issued July 2024)</span>
           </ul>
           <p>
             • Credential ID 255411519830
@@ -279,4 +279,13 @@ export default {
 .slide-fade-leave-active {
   animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.program-date {
+  display: block;
+  margin-top: -40px;
+  margin-bottom: 15px;
+  color: rgba(255, 192, 203, 0.8);
+}
+
+
 </style>
