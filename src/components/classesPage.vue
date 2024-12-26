@@ -83,7 +83,7 @@ export default {
   padding: 20px;
   border-radius: 8px;
   background: linear-gradient(45deg, rgba(255,192,203,0.1), rgba(255,192,203,0.05));
-  animation: borderGlow 0.1s ease-in-out infinite alternate;
+  animation: borderGlow 0.8s ease-in-out infinite alternate;
 
 }
 
