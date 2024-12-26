@@ -100,7 +100,7 @@ export default {
 
 .name1 {
   color: pink;
-  margin-left: 0;  
+  margin-left: 70px;  
   text-align: center; 
   font-weight: bold;
   font-size: 1.2em;
