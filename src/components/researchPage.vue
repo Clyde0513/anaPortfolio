@@ -37,10 +37,10 @@
               <div class="Sub-Research">
                 <h2 class="Sub-Research1">Research Labs</h2>
                 <div class="content">
-                  <p>
+                  <p class="lab-name">
                     Upsilon Lab - Computational Fluid Dynamics
                   </p>
-                  <u class="focus-header">areas of focus:</u>
+                  <u class="focus-header">Areas of focus:</u>
                   <ul class="focus-list">
                     <li>Black hole accretion disks</li>
                     <li>Digital blood veseel modeling</li>
@@ -53,7 +53,7 @@
                 <h2 class="Sub-Research1">Passionate People Project</h2>
                 <div class="content">
                   <p>
-                    Areas of Focus:
+                    <u class="focus-header1">Areas of Focus:</u>
                   </p>
                   <ul class="focus-list">
                     <li>Psychological correlaton between happiness and success in careers</li>
@@ -163,9 +163,23 @@ export default {
                0 0 30px pink;
 }
 
+.lab-name {
+  color: pink;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  margin-top: -9px
+}
+
 .focus-header {
   display: block;
   margin-top: -15px;
+  color: rgba(255, 192, 203, 0.8);
+}
+
+.focus-header1{
+  display: block;
+  font-size: 1.1em;
+  margin-top: -10px;
   color: rgba(255, 192, 203, 0.8);
 }
 
