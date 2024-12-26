@@ -12,23 +12,20 @@
         <div class="build-section">
           <h2 class="section-title">Genshin Impact Cursed Builds</h2>
           <div class="build-grid">
-            <div class="build-card">
-              <h3>DPS Barbara</h3>
-              <p>The healer becomes the dealer</p>
-              <ul class="build-details">
-                <li>Main Stats: ATK% / Hydro DMG / Crit Rate</li>
-                <li>Weapon: Lost Prayer to the Sacred Winds</li>
-                <li>Artifacts: 4pc Heart of Depth</li>
-              </ul>
-            </div>
-            <div class="build-card">
-              <h3>Physical Zhongli</h3>
-              <p>Who needs shields when you have crescent pike?</p>
-              <ul class="build-details">
-                <li>Main Stats: ATK% / Physical DMG / Crit Rate</li>
-                <li>Weapon: Crescent Pike</li>
-                <li>Artifacts: 2pc Pale Flame + 2pc Bloodstained</li>
-              </ul>
+            <div v-for="(build, index) in builds" :key="index" class="build-card">
+              <div class="build-header" @click="toggleBuild(index)">
+                <h3>{{ build.name }}</h3>
+                <span class="toggle-icon">{{ currentOpenBuild === index ? '−' : '+' }}</span>
+              </div>
+              <transition name="fade">
+                <div v-show="currentOpenBuild === index" class="build-content">
+                  <p class="build-tagline">{{ build.tagline }}</p>
+                  <ul class="build-details">
+                    <li v-for="(detail, dIndex) in build.details" 
+                        :key="dIndex">{{ detail }}</li>
+                  </ul>
+                </div>
+              </transition>
             </div>
           </div>
         </div>
@@ -39,7 +36,41 @@
 
 <script>
 export default {
-  name: 'HorribleBuildsPage'
+  name: 'HorribleBuildsPage',
+  data() {
+    return {
+      currentOpenBuild: -1, // -1 means no build is open
+      builds: [
+        {
+          name: 'DPS Barbara',
+          tagline: 'The healer becomes the dealer',
+          details: [
+            'Main Stats: ATK% / Hydro DMG / Crit Rate',
+            'Weapon: Lost Prayer to the Sacred Winds',
+            'Artifacts: 4pc Heart of Depth',
+            'Strategy: Normal attack spam with occasional E for Hydro application'
+          ]
+        },
+        {
+          name: 'Physical Zhongli',
+          tagline: 'Who needs shields when you have crescent pike?',
+          details: [
+            'Main Stats: ATK% / Physical DMG / Crit Rate',
+            'Weapon: Crescent Pike',
+            'Artifacts: 2pc Pale Flame + 2pc Bloodstained',
+            'Strategy: Auto-attack spam and only use E for the pillar resonance'
+          ]
+        }
+      ]
+    }
+  },
+  methods: {
+    toggleBuild(index) {
+      // If clicking the currently open build, close it
+      // Otherwise, open the clicked build
+      this.currentOpenBuild = this.currentOpenBuild === index ? -1 : index;
+    }
+  }
 }
 </script>
 
@@ -87,7 +118,7 @@ export default {
   line-height: 1.6;
 }
 
-@keyframes borderGlow {
+@keyframes borderGlow { 
   from {
     box-shadow: 0 0 10px rgba(255,192,203,0.3),
                 inset 0 0 10px rgba(255,192,203,0.3);
@@ -112,23 +143,61 @@ export default {
 }
 
 .build-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .build-card {
   background: rgba(255,192,203,0.1);
   border-radius: 8px;
-  padding: 15px;
   border: 1px solid rgba(255,192,203,0.3);
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-.build-card h3 {
+.build-card:hover {
+  border-color: rgba(255,192,203,0.6);
+  box-shadow: 0 0 10px rgba(255,192,203,0.2);
+}
+
+.build-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.toggle-icon {
   color: pink;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px pink;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.build-content {
+  padding: 0 10px 10px;
+}
+
+.build-tagline {
+  color: rgba(255,192,203,0.9);
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.3s ease;
+  max-height: 300px;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
 }
 
 .build-details {
