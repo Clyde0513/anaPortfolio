@@ -32,7 +32,7 @@
     </div>
     <div class="description-box">
       <p class="description-text">
-        I like doing <router-link to="/research" class="underline">research</router-link>, sometimes I play Genshin - <router-link to="/horribleBuilds"><span class="underline">check out my horrible builds</span>></router-link>! I occasionally cook, I tutor and direct at <a href="https://www.learn-with-us.com" target="_blank" class="underline">Learn With Us</a>, and I am learning LaTeX and Python!
+        I like doing <router-link to="/research" class="underline">research</router-link>, sometimes I play Genshin - <router-link to="/horribleBuilds"><span class="underline">check out my horrible builds</span>></router-link>  ! I occasionally cook, I tutor and direct at <a href="https://www.learn-with-us.com" target="_blank" class="underline">Learn With Us</a>, and I am learning LaTeX and Python!
       </p>
       <p class="description-text">
         fun facts: I'm a first responder (EMT-B), I have a 900+ day duolingo streak, my #1 artist on 
@@ -40,7 +40,7 @@
         was Beach House this year, I grew up in florida and then moved to texas halfway through highschool, and I wrote my Common App Essay on how much I hate eggs :D
       </p>
       <p class="description-text emphasis">
-        <span class="underline">Here's</span> what I am involved in, <router-link to="/classes" class="underline"><span class="underline">classes</span></router-link> I've taken, <router-link to="/certifications" class="underline"><span class="underline">certifications/licenses</span></router-link> I hold
+        <router-link to="/Involvement"><span class="underline">Here's</span></router-link> what I am involved in, <router-link to="/classes" class="underline"><span class="underline">classes</span></router-link> I've taken, <router-link to="/certifications" class="underline"><span class="underline">certifications/licenses</span></router-link> I hold
       </p>
 
       <p class="description-text">

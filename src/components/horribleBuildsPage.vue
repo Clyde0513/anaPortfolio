@@ -16,9 +16,9 @@
               <div class="build-header" @click="toggleBuild(index)">
                 <h3>{{ build.name }}</h3>
                 <span class="toggle-icon">{{ currentOpenBuild === index ? '−' : '+' }}</span>
-              </div>
+              </div>    
               <transition name="fade">
-                <div v-show="currentOpenBuild === index" class="build-content">
+                <div v-show="currentOpenBuild === index" class= "build-content">
                   <p class="build-tagline">{{ build.tagline }}</p>
                   <ul class="build-details">
                     <li v-for="(detail, dIndex) in build.details" 
