@@ -105,7 +105,7 @@ export default {
   padding: 3px;
   border-radius: 12px;
   background: linear-gradient(45deg, rgba(255,192,203,0.5), rgba(255,192,203,0.2));
-  animation: borderGlow 0.7s ease-in-out infinite alternate;
+  animation: borderGlow 0.4s ease-in-out infinite alternate;
 }
 
 .glow-border {

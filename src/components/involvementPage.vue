@@ -153,7 +153,7 @@ export default {
   padding: 3px;
   border-radius: 12px;
   background: linear-gradient(45deg, rgba(255,192,203,0.5), rgba(255,192,203,0.2));
-  animation: borderGlow 0.4s ease-in-out infinite alternate;
+  animation: borderGlow 0.5s ease-in-out infinite alternate;
 }
 
 .glow-border {
@@ -161,6 +161,8 @@ export default {
   border-radius: 10px;
   padding: 20px;
   min-height: 400px;
+  animation: borderGlow 0.4s ease-in-out infinite alternate;
+
 }
 
 .activity-grid {
@@ -221,6 +223,7 @@ export default {
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
 }
 
@@ -246,6 +249,17 @@ export default {
 .activity-details {
   transform-origin: top;
   animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes borderGlow {
+  from {
+    border-color: rgba(255, 192, 203, 0.3);
+    box-shadow: 0 0 10px rgba(255, 192, 203, 0.3);
+  }
+  to {
+    border-color: rgba(255, 192, 203, 0.6);
+    box-shadow: 0 0 20px rgba(255, 192, 203, 0.6);
+  }
 }
 
 @keyframes slideIn {
