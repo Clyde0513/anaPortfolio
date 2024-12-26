@@ -59,7 +59,3 @@ December 25, 2024
 - LinkedIn: [ilaanak](https://www.linkedin.com/in/ilaanak)
 - Email: ilaanak@ucla.edu
 - Instagram: [@ilaanahk](https://www.instagram.com/ilaanahk)
-
-## 📄 License
-
-MIT License - feel free to use this template for your own portfolio!
