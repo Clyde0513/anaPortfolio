@@ -4,7 +4,7 @@
       ← back
     </router-link>
     <h1>
-      <span class="name">Certifications/Licenses</span>
+      <span class="name1">Certifications/Licenses</span>
       <span class="heart1">♡</span>
     </h1>
     <div class="glow-border"></div>
@@ -98,8 +98,9 @@ export default {
   padding: 20px;
 }
 
-.name {
+.name1 {
   color: pink;
+  margin-left: 400px;
   font-weight: bold;
   font-size: 1.2em;
   letter-spacing: 2px;
