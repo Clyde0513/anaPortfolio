@@ -100,7 +100,8 @@ export default {
 
 .name1 {
   color: pink;
-  margin-left: 150px;
+  margin-left: 0;  
+  text-align: center; 
   font-weight: bold;
   font-size: 1.2em;
   letter-spacing: 2px;
@@ -205,15 +206,16 @@ export default {
 }
 
 .imageBox {
-  margin-left: 10px;
+  margin: 10px auto;
+  width: 100%; 
+  max-width: 500px; 
 }
 
 .image {
-  max-width: 50%;
+  max-width: 100%;  
   height: auto;
   display: block;
   margin: 0 auto;
-  margin-right: 500px;
 }
 
 .cert-header {
@@ -288,5 +290,56 @@ export default {
   color: rgba(255, 192, 203, 0.8);
 }
 
+/* Media Queries for Mobile */
+@media screen and (max-width: 768px) {
+  .classes-container {
+    padding: 10px;
+    margin: 10px;
+  }
 
+  .Sub-Classes {
+    margin: 20px 0;
+    padding: 15px;
+  }
+
+  .Sub-Classes1 {
+    font-size: 1em;
+  }
+
+  .content {
+    font-size: 0.85em;
+  }
+
+  .cert-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .toggle-icon {
+    margin-top: 5px;
+  }
+
+  .program-date {
+    margin-top: -20px;
+  }
+
+  .glow-border {
+    margin-bottom: -300px;
+    min-height: 300px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .name1 {
+    font-size: 1em;
+  }
+
+  .Sub-Classes {
+    padding: 10px;
+  }
+
+  .image {
+    margin-right: 0;  
+  }
+}
 </style>
