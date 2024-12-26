@@ -82,6 +82,7 @@ h1 {
 
 .name {
   color: pink;
+  margin-left: 180px;
   font-weight: bold;
   font-size: 1.2em;
   letter-spacing: 2px;
