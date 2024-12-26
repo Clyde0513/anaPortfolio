@@ -40,11 +40,11 @@
         was Beach House this year, I grew up in florida and then moved to texas halfway through highschool, and I wrote my Common App Essay on how much I hate eggs :D
       </p>
       <p class="description-text emphasis">
-        <span class="underline">Here's</span> what I am involved in, <span class="underline">classes</span> I've taken, <span class="underline">certifications/licenses</span> I hold
+        <span class="underline">Here's</span> what I am involved in, <router-link to="/classes" class="underline"><span class="underline">classes</span></router-link> I've taken, <span class="underline">certifications/licenses</span> I hold
       </p>
 
       <p class="description-text">
-        <em>Last updated: 12/25/2024</em>
+        <em>Last updated: 12/26/2024</em>
         <br/>
         <em>p.s. - tap on the pink underlined words, they're links!!</em>
       </p>
