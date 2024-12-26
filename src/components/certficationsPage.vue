@@ -7,46 +7,87 @@
       <span class="name">Certifications/Licenses</span>
       <span class="heart1">♡</span>
     </h1>
-      <div class="glow-border"></div>
-        <div class="Sub-Classes">
-          <h2 class="Sub-Classes1">Social and Behavioral Research Certification</h2>
-          <div class="content">
-            <ul class="classes-list">
-              CITI Program (issued Mar 2023 • Expires Mar 2026)</ul>
-            <p>
-              • Credential ID 52715192
-            </p>
-            <div class="imageBox">
-              <img class = "image" src="../assets/certificate.png" alt="CITI Program Certification" />
-            </div>
+    <div class="glow-border"></div>
+    
+    <!-- CITI Certification Section -->
+    <div class="Sub-Classes">
+      <div class="cert-header" @click="toggleCITI">
+        <h2 class="Sub-Classes1">Social and Behavioral Research Certification</h2>
+        <span class="toggle-icon" :class="{ 'rotate': isOpenCITI }">▶</span>
+      </div>
+      <transition
+        name="slide-fade"
+        @enter="startTransition"
+        @leave="endTransition"
+      >
+        <div class="content" v-show="isOpenCITI" :class="{ 'content-open': isOpenCITI }">
+          <ul class="classes-list">
+            CITI Program (issued Mar 2023 • Expires Mar 2026)
+          </ul>
+          <p>
+            • Credential ID 52715192
+          </p>
+          <div class="imageBox">
+            <img class="image" src="../assets/certificate.png" alt="CITI Program Certification" />
           </div>
         </div>
-
-        <div class="Sub-Classes">
-          <h2 class="Sub-Classes1">Basic Life Support</h2>
-          <div class="content">
-            <ul class="classes-list">
-              BLS Program (issued July 2024)</ul>
-            <p>
-              • Credential ID 255411519830
-            </p>
-            <div class="imageBox">
-              <img class = "image" src="../assets/BLS.png" alt="BLS Program Certification" />
-            </div>
-          </div>
-        </div>
-
-        
-      
-     
+      </transition>
     </div>
- 
- 
+
+    <!-- BLS Certification Section -->
+    <div class="Sub-Classes">
+      <div class="cert-header" @click="toggleBLS">
+        <h2 class="Sub-Classes1">Basic Life Support</h2>
+        <span class="toggle-icon" :class="{ 'rotate': isOpenBLS }">▶</span>
+      </div>
+      <transition
+        name="slide-fade"
+        @enter="startTransition"
+        @leave="endTransition"
+      >
+        <div class="content" v-show="isOpenBLS" :class="{ 'content-open': isOpenBLS }">
+          <ul class="classes-list">
+            BLS Program (issued July 2024)
+          </ul>
+          <p>
+            • Credential ID 255411519830
+          </p>
+          <div class="imageBox">
+            <img class="image" src="../assets/BLS.png" alt="BLS Program Certification" />
+          </div>
+        </div>
+      </transition>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'certificationsPage'
+  name: 'certificationsPage',
+  data() {
+    return {
+      isOpenCITI: false,
+      isOpenBLS: false
+    }
+  },
+  methods: {
+    toggleCITI() {
+      this.isOpenCITI = !this.isOpenCITI;
+    },
+    toggleBLS() {
+      this.isOpenBLS = !this.isOpenBLS;
+    },
+    startTransition(el) {
+      el.style.height = 'auto';
+      const height = el.offsetHeight;
+      el.style.height = '0px';
+      el.offsetHeight; // force reflow
+      el.style.height = height + 'px';
+    },
+    endTransition(el) {
+      el.style.height = '0px';
+    }
+  }
 }
 </script>
 
@@ -73,8 +114,6 @@ export default {
   margin-left: 10px;
 }
 
-
-
 .glow-border {
   background: black;
   border-radius: 10px;
@@ -90,7 +129,7 @@ export default {
   border-radius: 8px;
   background: linear-gradient(45deg, rgba(255,192,203,0.1), rgba(255,192,203,0.05));
   animation: borderGlow 0.8s ease-in-out infinite alternate;
-
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .Sub-Classes1 {
@@ -107,6 +146,18 @@ export default {
   color: rgba(255, 192, 203, 0.7);
   font-size: 0.9em;
   line-height: 1.6;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  height: 0;
+  transform: translateY(-20px);
+}
+
+.content-open {
+  opacity: 1;
+  height: auto !important;
+  padding: 20px 0;
+  transform: translateY(0);
 }
 
 .classes-list {
@@ -164,4 +215,68 @@ export default {
   margin-right: 500px;
 }
 
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-icon {
+  color: pink;
+  font-size: 1.2em;
+  margin-right: 10px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-icon.rotate {
+  transform: rotate(90deg);
+}
+
+
+.content {
+  transition: height 0.3s ease-out;
+  overflow: hidden;
+}
+
+.cert-header:hover {
+  transform: translateX(10px);
+  transition: transform 0.3s ease;
+}
+
+.cert-header:hover .toggle-icon {
+  color: rgba(255, 192, 203, 0.5);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.slide-fade-enter-active {
+  animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-fade-leave-active {
+  animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
 </style>
