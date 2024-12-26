@@ -12,7 +12,7 @@
     <!-- CITI Certification Section -->
     <div class="Sub-Classes">
       <div class="cert-header" @click="toggleCITI">
-        <h2 class="Sub-Classes1">Social and Behavioral Research Certification</h2>
+        <h2 class="Sub-Classes1">Social and Behavioral Research</h2>
         <span class="toggle-icon" :class="{ 'rotate': isOpenCITI }">▶</span>
       </div>
       <transition
