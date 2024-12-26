@@ -19,29 +19,6 @@ A minimalist, pink-themed personal portfolio website built with Vue.js. Features
 - CSS Animations
 - Modern JavaScript
 
-## 🚀 Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/anaPortfolio.git
-```
-
-2. Install dependencies:
-```bash
-cd anaPortfolio
-npm install
-```
-
-3. Run development server:
-```bash
-npm run dev
-```
-
-4. Build for production:
-```bash
-npm run build
-```
-
 ## 🎨 Design Choices
 
 - Black background for elegant contrast
@@ -57,5 +34,5 @@ December 25, 2024
 ## 🔗 Connect
 
 - LinkedIn: [ilaanak](https://www.linkedin.com/in/ilaanak)
-- Email: ilaanak@ucla.edu
+- Email: [ilaanak@ucla.edu](mailto:ilaanak@ucla.edu)
 - Instagram: [@ilaanahk](https://www.instagram.com/ilaanahk)
