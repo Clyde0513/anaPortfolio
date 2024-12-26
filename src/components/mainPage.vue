@@ -32,7 +32,7 @@
     </div>
     <div class="description-box">
       <p class="description-text">
-        I like doing <router-link to="/research" class="underline">research</router-link>, sometimes I play Genshin - <span class="underline">check out my horrible builds</span>! I occasionally cook, I tutor and direct at <a href="https://www.learn-with-us.com" target="_blank" class="underline">Learn With Us</a>, and I am learning LaTeX and Python!
+        I like doing <router-link to="/research" class="underline">research</router-link>, sometimes I play Genshin - <router-link to="/horribleBuilds"><span class="underline">check out my horrible builds</span>></router-link>! I occasionally cook, I tutor and direct at <a href="https://www.learn-with-us.com" target="_blank" class="underline">Learn With Us</a>, and I am learning LaTeX and Python!
       </p>
       <p class="description-text">
         fun facts: I'm a first responder (EMT-B), I have a 900+ day duolingo streak, my #1 artist on 

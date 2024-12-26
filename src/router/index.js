@@ -3,6 +3,7 @@ import MainPage from '../components/mainPage.vue'
 import ResearchPage from '../components/researchPage.vue'
 import ClassesPage from '../components/classesPage.vue'
 import certficationsPage from '../components/certficationsPage.vue'
+import horribleBuildsPage from '../components/horribleBuildsPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/certifications',
       name: 'Certifications',
       component: certficationsPage
+    },
+    {
+      path: '/horribleBuilds',
+      name: 'HorribleBuilds',
+      component: horribleBuildsPage
     }
 
   ]
