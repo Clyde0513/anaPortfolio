@@ -1,5 +1,12 @@
 <template>
   <div class="app">
+    <div class="particles-container">
+      <div v-for="particle in particles" 
+           :key="particle.id" 
+           class="particle"
+           :style="particle.style">
+      </div>
+    </div>
     <div class="header-content">
       <h1>
         <span class="name">ILAANA</span>
@@ -53,8 +60,28 @@
 </template>
 
 <script>
+
 export default {
-  name: 'MainPage'
+  name: 'MainPage',
+  data() {
+    return {
+      particles: [],
+      particleCount: 250
+    }
+  },
+  mounted() {
+    for (let i = 0; i < this.particleCount; i++) {
+      this.particles.push({
+        id: i,
+        style: {
+          left: Math.random() * 100 + 'vw',
+          top: Math.random() * 100 + 'vh',
+          animationDelay: 1,
+          animationDuration: 5 + Math.random() * 10 + 's'
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -69,6 +96,8 @@ body {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -238,5 +267,51 @@ a {
   display: flex;
   align-items: center;
   margin-left: -5px; /* Changed from 10px to -5px */
+}
+
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: pink;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.particle:nth-child(even) {
+  background: rgba(255, 192, 203, 0.5);
+  width: 6px;
+  height: 6px;
+}
+
+.particle:nth-child(3n) {
+  width: 3px;
+  height: 3px;
 }
 </style>

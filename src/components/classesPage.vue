@@ -1,4 +1,11 @@
 <template>
+  <div class="particles-container">
+      <div v-for="particle in particles" 
+           :key="particle.id" 
+           class="particle"
+           :style="particle.style">
+      </div>
+    </div>
   <div class="classes-container">
     <router-link to="/" class="back-button">
       ← back
@@ -40,7 +47,26 @@
 
 <script>
 export default {
-  name: 'ClassesPage'
+  name: 'ClassesPage',
+  data() {
+    return {
+      particles: [],
+      particleCount: 250
+    }
+  },
+  mounted() {
+    for (let i = 0; i < this.particleCount; i++) {
+      this.particles.push({
+        id: i,
+        style: {
+          left: Math.random() * 100 + 'vw',
+          top: Math.random() * 100 + 'vh',
+          animationDelay: 1,
+          animationDuration: 5 + Math.random() * 10 + 's'
+        }
+      })
+    }
+  }
 }
 </script>
 
