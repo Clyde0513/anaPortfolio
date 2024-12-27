@@ -13,12 +13,9 @@
         <p>{{ recipe.description }}</p>
         <div class="recipe-footer">
           <div class="like-section">
-            <button @click="toggleLike(index)" 
-                    class="like-button" 
-                    :class="{ 'liked': recipe.liked }">
-              ♥
-            </button>
+            <button @click="decreaseLike(index)" class="like-button decrease">−</button>
             <span>{{ recipe.likes }}</span>
+            <button @click="increaseLike(index)" class="like-button increase">+</button>
           </div>
         </div>
       </div>
@@ -40,54 +37,63 @@ export default {
           id: 1,
           title: 'First Meal',
           description: 'yadadadadada',
-          likes: 0,
-          liked: false
+          likes: 0
         },
         {
           id: 2,
           title: 'Second Meal',
           description: 'Another delicious recipe',
-          likes: 0,
-          liked: false
+          likes: 0
         }
       ],
       error: null
     }
   },
   methods: {
-    async toggleLike(index) {
+    async increaseLike(index) {
       try {
-        console.log('Attempting to toggle like for recipe:', index);
         const recipe = this.recipes[index];
         const recipeRef = dbRef(db, `recipes/${recipe.id}`);
         
-        // Log the current state
-        console.log('Current recipe state:', recipe);
-        console.log('Database reference path:', `recipes/${recipe.id}`);
-        
         const snapshot = await get(recipeRef);
-        console.log('Database snapshot:', snapshot.val());
-        
         const currentLikes = (snapshot.val()?.likes || 0);
-        const newLikes = recipe.liked ? currentLikes - 1 : currentLikes + 1;
+        const newLikes = currentLikes + 1;
         
-        // Update local state first
-        recipe.liked = !recipe.liked;
+        // Update local state
         recipe.likes = newLikes;
         
-        // Then update Firebase
+        // Update Firebase
         await set(recipeRef, {
           likes: newLikes,
-          liked: recipe.liked,
           id: recipe.id,
           title: recipe.title
         });
-        
-        console.log('Like updated successfully');
       } catch (error) {
         console.error('Error updating likes:', error);
-        // Revert local state if Firebase update fails
-        recipe.liked = !recipe.liked;
+        recipe.likes = currentLikes;
+      }
+    },
+
+    async decreaseLike(index) {
+      try {
+        const recipe = this.recipes[index];
+        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
+        
+        const snapshot = await get(recipeRef);
+        const currentLikes = (snapshot.val()?.likes || 0);
+        const newLikes = Math.max(0, currentLikes - 1); // Prevent negative likes
+        
+        // Update local state
+        recipe.likes = newLikes;
+        
+        // Update Firebase
+        await set(recipeRef, {
+          likes: newLikes,
+          id: recipe.id,
+          title: recipe.title
+        });
+      } catch (error) {
+        console.error('Error updating likes:', error);
         recipe.likes = currentLikes;
       }
     },
@@ -101,7 +107,6 @@ export default {
             console.log('Received data for recipe', recipe.id, ':', data);
             if (data) {
               recipe.likes = data.likes || 0;
-              recipe.liked = data.liked || false;
             }
           }, (error) => {
             console.error('Firebase listener error:', error);
@@ -179,7 +184,7 @@ export default {
 .like-section {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .like-button {
@@ -189,16 +194,22 @@ export default {
   font-size: 1.2em;
   cursor: pointer;
   transition: transform 0.3s ease;
-  padding: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 
 .like-button:hover {
   transform: scale(1.2);
 }
 
-.like-button.liked {
-  color: pink;
-  animation: heartBeat 0.3s ease-in-out;
+.like-button.increase:hover {
+  color: #ff69b4;
+  background: rgba(255, 105, 180, 0.1);
+}
+
+.like-button.decrease:hover {
+  color: #ff1493;
+  background: rgba(255, 20, 147, 0.1);
 }
 
 @keyframes heartBeat {
