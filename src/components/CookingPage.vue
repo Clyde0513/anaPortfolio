@@ -13,9 +13,14 @@
         <p>{{ recipe.description }}</p>
         <div class="recipe-footer">
           <div class="like-section">
-            <button @click="decreaseLike(index)" class="like-button decrease">−</button>
+            <button 
+              @click="toggleLike(index)" 
+              class="heart-button"
+              :class="{ 'liked': hasUserLiked(recipe.id) }"
+            >
+              ♥
+            </button>
             <span>{{ recipe.likes }}</span>
-            <button @click="increaseLike(index)" class="like-button increase">+</button>
           </div>
         </div>
       </div>
@@ -69,25 +74,33 @@ export default {
       return snapshot.val();
     },
 
-    async increaseLike(index) {
+    async hasUserLiked(recipeId) {
+      if (!this.userIp) return false;
+      const voteRef = dbRef(db, `votes/${recipeId}/${this.userIp}`);
+      const snapshot = await get(voteRef);
+      return snapshot.val() === 'liked';
+    },
+
+    async toggleLike(index) {
       if (!this.userIp) return;
       
       try {
         const recipe = this.recipes[index];
-        const userVote = await this.checkUserVote(recipe.id);
-        
-        if (userVote === 'up') {
-          console.log('Already voted up');
-          return;
-        }
-
+        const userLiked = await this.hasUserLiked(recipe.id);
         const recipeRef = dbRef(db, `recipes/${recipe.id}`);
         const snapshot = await get(recipeRef);
         const currentLikes = (snapshot.val()?.likes || 0);
-        const newLikes = currentLikes + 1;
         
-        // Update vote record
-        await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), 'up');
+        let newLikes;
+        if (userLiked) {
+          // Unlike
+          newLikes = Math.max(0, currentLikes - 1);
+          await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), null);
+        } else {
+          // Like
+          newLikes = currentLikes + 1;
+          await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), 'liked');
+        }
         
         // Update likes
         recipe.likes = newLikes;
@@ -97,41 +110,10 @@ export default {
           title: recipe.title
         });
       } catch (error) {
-        console.error('Error updating likes:', error);
+        console.error('Error toggling like:', error);
       }
     },
 
-    async decreaseLike(index) {
-      if (!this.userIp) return;
-      
-      try {
-        const recipe = this.recipes[index];
-        const userVote = await this.checkUserVote(recipe.id);
-        
-        if (userVote === 'down') {
-          console.log('Already voted down');
-          return;
-        }
-
-        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
-        const snapshot = await get(recipeRef);
-        const currentLikes = (snapshot.val()?.likes || 0);
-        const newLikes = Math.max(0, currentLikes - 1);
-        
-        // Update vote record
-        await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), 'down');
-        
-        // Update likes
-        recipe.likes = newLikes;
-        await set(recipeRef, {
-          likes: newLikes,
-          id: recipe.id,
-          title: recipe.title
-        });
-      } catch (error) {
-        console.error('Error updating likes:', error);
-      }
-    },
     initializeFirebaseListeners() {
       try {
         console.log('Initializing Firebase listeners');
@@ -222,29 +204,24 @@ export default {
   gap: 12px;
 }
 
-.like-button {
+.heart-button {
   background: none;
   border: none;
   color: rgba(255, 192, 203, 0.7);
-  font-size: 1.2em;
+  font-size: 1.5em;
   cursor: pointer;
-  transition: transform 0.3s ease;
-  padding: 5px 10px;
-  border-radius: 4px;
+  transition: all 0.3s ease;
+  padding: 5px;
 }
 
-.like-button:hover {
+.heart-button:hover {
   transform: scale(1.2);
-}
-
-.like-button.increase:hover {
   color: #ff69b4;
-  background: rgba(255, 105, 180, 0.1);
 }
 
-.like-button.decrease:hover {
-  color: #ff1493;
-  background: rgba(255, 20, 147, 0.1);
+.heart-button.liked {
+  color: #ff69b4;
+  animation: heartBeat 0.5s ease-in-out;
 }
 
 @keyframes heartBeat {
