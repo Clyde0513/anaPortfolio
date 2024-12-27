@@ -5,6 +5,7 @@ import ClassesPage from '../components/classesPage.vue'
 import certficationsPage from '../components/certficationsPage.vue'
 import horribleBuildsPage from '../components/horribleBuildsPage.vue'
 import InvolvementPage from '../components/involvementPage.vue'
+import CookingPage from '../components/CookingPage.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/involvement',
       name: 'Involvement',
       component: InvolvementPage
+    },
+    {
+      path: '/cooking',
+      name: 'Cooking',
+      component: CookingPage
     }
 
   ]
