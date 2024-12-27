@@ -27,9 +27,13 @@
 </template>
 
 <script>
+import { ref, onMounted } from 'vue';
+import { db } from '../firebase';
+import { ref as dbRef, onValue, set, get } from 'firebase/database';
+
 export default {
   name: 'CookingPage',
-  data() {
+  data() {  
     return {
       recipes: [
         {
@@ -46,41 +50,71 @@ export default {
           likes: 0,
           liked: false
         }
-      ]
+      ],
+      error: null
     }
   },
   methods: {
-    toggleLike(index) {
-      const recipe = this.recipes[index];
-      recipe.liked = !recipe.liked;
-      recipe.likes += recipe.liked ? 1 : -1;
-      this.saveLikesToStorage();
-    },
-    saveLikesToStorage() {
-      const likesData = this.recipes.map(recipe => ({
-        id: recipe.id,
-        likes: recipe.likes,
-        liked: recipe.liked
-      }));
-      localStorage.setItem('recipeLikes', JSON.stringify(likesData));
-    },
-    loadLikesFromStorage() {
-      const savedLikes = localStorage.getItem('recipeLikes');
-      if (savedLikes) {
-        const likesData = JSON.parse(savedLikes);
-        this.recipes = this.recipes.map(recipe => {
-          const savedRecipe = likesData.find(item => item.id === recipe.id);
-          if (savedRecipe) {
-            recipe.likes = savedRecipe.likes;
-            recipe.liked = savedRecipe.liked;
-          }
-          return recipe;
+    async toggleLike(index) {
+      try {
+        console.log('Attempting to toggle like for recipe:', index);
+        const recipe = this.recipes[index];
+        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
+        
+        // Log the current state
+        console.log('Current recipe state:', recipe);
+        console.log('Database reference path:', `recipes/${recipe.id}`);
+        
+        const snapshot = await get(recipeRef);
+        console.log('Database snapshot:', snapshot.val());
+        
+        const currentLikes = (snapshot.val()?.likes || 0);
+        const newLikes = recipe.liked ? currentLikes - 1 : currentLikes + 1;
+        
+        // Update local state first
+        recipe.liked = !recipe.liked;
+        recipe.likes = newLikes;
+        
+        // Then update Firebase
+        await set(recipeRef, {
+          likes: newLikes,
+          liked: recipe.liked,
+          id: recipe.id,
+          title: recipe.title
         });
+        
+        console.log('Like updated successfully');
+      } catch (error) {
+        console.error('Error updating likes:', error);
+        // Revert local state if Firebase update fails
+        recipe.liked = !recipe.liked;
+        recipe.likes = currentLikes;
+      }
+    },
+    initializeFirebaseListeners() {
+      try {
+        console.log('Initializing Firebase listeners');
+        this.recipes.forEach(recipe => {
+          const recipeRef = dbRef(db, `recipes/${recipe.id}`);
+          onValue(recipeRef, (snapshot) => {
+            const data = snapshot.val();
+            console.log('Received data for recipe', recipe.id, ':', data);
+            if (data) {
+              recipe.likes = data.likes || 0;
+              recipe.liked = data.liked || false;
+            }
+          }, (error) => {
+            console.error('Firebase listener error:', error);
+          });
+        });
+      } catch (error) {
+        console.error('Error initializing Firebase listeners:', error);
       }
     }
   },
   mounted() {
-    this.loadLikesFromStorage();
+    console.log('Component mounted, initializing Firebase');
+    this.initializeFirebaseListeners();
   },
   directives: {
     animateOnScroll: {
