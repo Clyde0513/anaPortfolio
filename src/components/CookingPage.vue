@@ -46,23 +46,51 @@ export default {
           likes: 0
         }
       ],
+      userIp: null,
       error: null
     }
   },
   methods: {
+    async getUserIp() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        this.userIp = data.ip.replace(/\./g, '_'); // Replace dots with underscores for Firebase
+      } catch (error) {
+        console.error('Error getting IP:', error);
+        this.userIp = 'unknown';
+      }
+    },
+
+    async checkUserVote(recipeId) {
+      if (!this.userIp) return null;
+      const voteRef = dbRef(db, `votes/${recipeId}/${this.userIp}`);
+      const snapshot = await get(voteRef);
+      return snapshot.val();
+    },
+
     async increaseLike(index) {
+      if (!this.userIp) return;
+      
       try {
         const recipe = this.recipes[index];
-        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
+        const userVote = await this.checkUserVote(recipe.id);
         
+        if (userVote === 'up') {
+          console.log('Already voted up');
+          return;
+        }
+
+        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
         const snapshot = await get(recipeRef);
         const currentLikes = (snapshot.val()?.likes || 0);
         const newLikes = currentLikes + 1;
         
-        // Update local state
-        recipe.likes = newLikes;
+        // Update vote record
+        await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), 'up');
         
-        // Update Firebase
+        // Update likes
+        recipe.likes = newLikes;
         await set(recipeRef, {
           likes: newLikes,
           id: recipe.id,
@@ -70,23 +98,31 @@ export default {
         });
       } catch (error) {
         console.error('Error updating likes:', error);
-        recipe.likes = currentLikes;
       }
     },
 
     async decreaseLike(index) {
+      if (!this.userIp) return;
+      
       try {
         const recipe = this.recipes[index];
-        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
+        const userVote = await this.checkUserVote(recipe.id);
         
+        if (userVote === 'down') {
+          console.log('Already voted down');
+          return;
+        }
+
+        const recipeRef = dbRef(db, `recipes/${recipe.id}`);
         const snapshot = await get(recipeRef);
         const currentLikes = (snapshot.val()?.likes || 0);
-        const newLikes = Math.max(0, currentLikes - 1); // Prevent negative likes
+        const newLikes = Math.max(0, currentLikes - 1);
         
-        // Update local state
+        // Update vote record
+        await set(dbRef(db, `votes/${recipe.id}/${this.userIp}`), 'down');
+        
+        // Update likes
         recipe.likes = newLikes;
-        
-        // Update Firebase
         await set(recipeRef, {
           likes: newLikes,
           id: recipe.id,
@@ -94,7 +130,6 @@ export default {
         });
       } catch (error) {
         console.error('Error updating likes:', error);
-        recipe.likes = currentLikes;
       }
     },
     initializeFirebaseListeners() {
@@ -117,8 +152,8 @@ export default {
       }
     }
   },
-  mounted() {
-    console.log('Component mounted, initializing Firebase');
+  async mounted() {
+    await this.getUserIp();
     this.initializeFirebaseListeners();
   },
   directives: {
@@ -229,5 +264,11 @@ export default {
 
 .back-button:hover {
   color: pink;
+}
+
+.like-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 </style>
